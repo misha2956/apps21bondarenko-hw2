@@ -138,7 +138,7 @@ public class ImmutableLinkedListTest {
     @Test
     public void toArray() {
         assertEquals(2, immutableLinkedList.add(1).add(2).toArray()[1]);
-        assertNull(immutableLinkedList.toArray());
+        assertEquals(0, immutableLinkedList.toArray().length);
     }
 
     @Test
