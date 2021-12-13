@@ -76,6 +76,7 @@ public class ImmutableLinkedListTest {
         assertEquals(1, immutableLinkedList.add(1).addAll(0, new Integer[0]).get(10));
         immutableLinkedList = (ImmutableLinkedList) immutableLinkedList.addAll(0, c);
         assertEquals(5, immutableLinkedList.get(0));
+        assertEquals(7, (new ImmutableLinkedList()).add(1).addAll(1, d).get(5));
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
