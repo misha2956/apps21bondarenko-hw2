@@ -6,6 +6,7 @@ import org.junit.Test;
 import java.util.Arrays;
 
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class ImmutableLinkedListTest {
 
@@ -14,6 +15,11 @@ public class ImmutableLinkedListTest {
     @Before
     public void setUp() throws Exception {
         immutableLinkedList = new ImmutableLinkedList();
+    }
+
+    @Test
+    public void testEmptyConstructor() {
+        assertEquals(1, (new ImmutableLinkedList(new Integer[0])).add(1).get(0));
     }
 
     @Test
@@ -50,7 +56,7 @@ public class ImmutableLinkedListTest {
         immutableLinkedList = (ImmutableLinkedList) immutableLinkedList.addAll(d);
         assertEquals(7, immutableLinkedList.get(5));
         assertEquals(7, immutableLinkedList.get(9));
-
+        assertEquals(1, immutableLinkedList.add(1).addAll(new Integer[0]).get(10));
     }
 
     @Test
@@ -75,6 +81,11 @@ public class ImmutableLinkedListTest {
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
+    public void getExceptionNegative() {
+        immutableLinkedList.get(-1);
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
     public void getException() {
         immutableLinkedList.add(7).get(1);
     }
@@ -87,16 +98,20 @@ public class ImmutableLinkedListTest {
     @Test
     public void remove() {
         assertEquals(5, immutableLinkedList.add(7).add(5).remove(0).get(0));
+        assertEquals(7, immutableLinkedList.add(7).add(5).remove(1).get(0));
     }
 
     @Test
     public void set() {
         assertEquals(3, immutableLinkedList.add(1).add(2).set(0, 3).get(0));
+        assertEquals(3, immutableLinkedList.set(0, 3).get(0));
     }
 
     @Test
     public void indexOf() {
         assertEquals(1, immutableLinkedList.add(1).add(2).indexOf(2));
+        assertEquals(-1, immutableLinkedList.indexOf(2));
+        assertEquals(-1, immutableLinkedList.add(1).add(2).indexOf(345));
     }
 
     @Test
@@ -111,12 +126,14 @@ public class ImmutableLinkedListTest {
 
     @Test
     public void isEmpty() {
+        assertFalse(immutableLinkedList.add(1).add(2).isEmpty());
         assertTrue(immutableLinkedList.add(1).add(2).clear().isEmpty());
     }
 
     @Test
     public void toArray() {
         assertEquals(2, immutableLinkedList.add(1).add(2).toArray()[1]);
+        assertNull(immutableLinkedList.toArray());
     }
 
     @Test
@@ -132,30 +149,36 @@ public class ImmutableLinkedListTest {
     @Test
     public void getHead() {
         assertEquals(2, immutableLinkedList.addFirst(1).addFirst(2).getHead().getValue());
+        assertNull(immutableLinkedList.getHead());
     }
 
     @Test
     public void getTail() {
         assertEquals(1, immutableLinkedList.addFirst(1).addFirst(2).getTail().getValue());
+        assertNull(immutableLinkedList.getTail());
     }
 
     @Test
     public void getFirst() {
         assertEquals(2, immutableLinkedList.addFirst(1).addFirst(2).getFirst());
+        assertNull(immutableLinkedList.getFirst());
     }
 
     @Test
     public void getLast() {
         assertEquals(1, immutableLinkedList.addFirst(1).addFirst(2).getLast());
+        assertNull(immutableLinkedList.getLast());
     }
 
     @Test
     public void removeFirst() {
         assertEquals(1, immutableLinkedList.addFirst(1).addFirst(2).removeFirst().getFirst());
+        assertEquals(1, immutableLinkedList.removeFirst().add(1).get(0));
     }
 
     @Test
     public void removeLast() {
         assertEquals(2, immutableLinkedList.addFirst(1).addFirst(2).removeLast().getLast());
+        assertEquals(1, immutableLinkedList.removeLast().add(1).get(0));
     }
 }
