@@ -234,7 +234,7 @@ public final class ImmutableLinkedList implements ImmutableList {
     @Override
     public Object[] toArray() {
         if (firstNode == null) {
-            return null;
+            return new Object[0];
         }
         Object[] ans = new Object[size];
         Node curNode = firstNode;
